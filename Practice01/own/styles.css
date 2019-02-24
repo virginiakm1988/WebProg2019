@@ -1,6 +1,6 @@
 body{
     background-color: AliceBlue;
-    font-family:Arial, sans-serif;
+    font-family:monospace;
             padding: 8%;
 }
 #top{
@@ -29,18 +29,25 @@ body{
             font-size: 150%;
             font-family: fantasy;;
         }
+        .anim-typewriter{
+  animation: typewriter 4s steps(22) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+
         input{
             width: 80%;
             box-sizing: border-box;
             margin:  1%;
-            padding: 3%;
+            padding: 5px 15px;
             margin-right: auto;
             margin-left: auto;
             font-size: 90%;
+            cursor:pointer;
+            border-radius: 5px;
         }
         input[type = "text"]:focus{
             border: 2px solid darkgrey;
-
         }
 
         table{
@@ -48,7 +55,7 @@ body{
             border-collapse: collapse;
             margin-left:auto; 
             margin-right:auto;
-
+            border-radius: 10px;
             font-family: monospace;
         }
 
@@ -67,4 +74,11 @@ body{
             margin-left: auto;
             margin-right: auto;
 
+        }
+        #bottom{
+            
+            background-image: url("the lean.jpg");
+            padding: 15%;
+            background-size: 100%;
+            color: ghostwhite;
         }
