@@ -81,4 +81,5 @@ body{
             padding: 15%;
             background-size: 100%;
             color: ghostwhite;
+             -webkit-text-stroke: .5px black;
         }
