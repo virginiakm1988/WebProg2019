@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Image Viewer</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="styles.css"/>
+    </head>
+    <body>
+ 
+    <div class="image-viewer__container" >
+        <h2 class="image-viewer__title ">Image viewer</h2> 
+        <div class = "image-viewer__main">
+            <div  class="image-viewer__button" >
+                <img onclick="backIMG()" src="./images/back.png">
+
+            </div>
+            <div class="image-viewer__display" >
+
+                <img id="display" src="./images/pizza01.jpg">
+                <div id="source" class="image-viewer__display-source-wrapper" >source</div>
+            </div>
+            <div class="image-viewer__button">
+                <img onclick="nextIMG()" src="./images/next.png">
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        var pictures = ['./images/beatles01.jpg',"./images/pizza01.jpg",'./images/jackson01.jpg']
+        var index = 0;
+        function nextIMG(){
+            if(index == pictures.length-1){
+                index = 0;
+            } 
+            else{
+                index = index+1;
+            }
+            
+            var picture = document.getElementById("display");
+            picture.src = pictures[index];  
+
+            
+        }
+        function backIMG(){
+            if(index == 0){
+                index = pictures.length-1;
+            }
+            else{
+                index = index-1;
+            }
+            
+            var picture = document.getElementById("display");
+            picture.src = pictures[index];  
+            
+        }
+        
+    </script>
+    </body>
+</html>
