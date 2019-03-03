@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Image Viewer</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css"/>
     </head>
     <body>
@@ -27,8 +28,8 @@
 
 
     <script type="text/javascript">
-        var pictures = ['video','./images/jackson01.jpg','./images/jackson03.jpg','./images/jackson04.jpg','./images/jackson05.jpg','./images/jackson06.jpg','./images/jackson07.jpg','./images/jackson08.jpg',]
-        var index = 0;
+        var pictures = ['video','./images/meme01.jpg','./images/meme02.jpg','./images/meme03.jpg','./images/meme04.jpg','./images/meme05.jpg']
+        var index = -1;
         function nextIMG(){
             if(index == pictures.length-1){
                 index = 0;
