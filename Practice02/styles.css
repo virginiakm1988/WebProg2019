@@ -15,6 +15,7 @@ body {
 }
 
 .image-viewer__title {
+	font-family: fantasy;
 	font-size: 5rem;
 	font-weight: 600;
 	color: #615dec;

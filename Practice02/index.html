@@ -5,18 +5,18 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css"/>
     </head>
     <body>
- 
     <div class="image-viewer__container" >
-        <h2 class="image-viewer__title ">Image viewer</h2> 
+        <h2 class="image-viewer__title ">Image viewer</h2>
+        
         <div class = "image-viewer__main">
             <div  class="image-viewer__button" >
                 <img onclick="backIMG()" src="./images/back.png">
 
             </div>
-            <div class="image-viewer__display" >
-
-                <img id="display" src="./images/pizza01.jpg">
+            <div id  = 'display' class="image-viewer__display" >
+                <img src="./images/pizza01.jpg">
                 <div id="source" class="image-viewer__display-source-wrapper" >source</div>
+
             </div>
             <div class="image-viewer__button">
                 <img onclick="nextIMG()" src="./images/next.png">
@@ -27,7 +27,7 @@
 
 
     <script type="text/javascript">
-        var pictures = ['./images/beatles01.jpg','./images/beatles02.jpg','./images/beatles03.jpg','./images/queen.jpg','./images/jackson01.jpg','./images/jackson02.jpg','./images/jackson03.jpg','./images/jackson04.jpg','./images/jackson05.jpg','./images/jackson06.jpg','./images/jackson07.jpg','./images/jackson08.jpg','./images/jackson09.jpg']
+        var pictures = ['video','./images/jackson01.jpg','./images/jackson03.jpg','./images/jackson04.jpg','./images/jackson05.jpg','./images/jackson06.jpg','./images/jackson07.jpg','./images/jackson08.jpg',]
         var index = 0;
         function nextIMG(){
             if(index == pictures.length-1){
@@ -38,7 +38,16 @@
             }
             
             var picture = document.getElementById("display");
-            picture.src = pictures[index];  
+
+            if (pictures[index] == 'video') {
+                picture.innerHTML = '<video id = "display" src="./images/go blah.mp4" controls="controls">';
+                console.log("video");
+                console.log(picture.innerHTML.getText())
+            }
+            else{
+                picture.innerHTML = '<img src='+pictures[index]+'>';
+            }
+             
 
             
         }
@@ -50,8 +59,16 @@
                 index = index-1;
             }
             
-            var picture = document.getElementById("display");
-            picture.src = pictures[index];  
+           var picture = document.getElementById("display");
+
+            if (pictures[index] == 'video') {
+                picture.innerHTML = '<video id = "display" src="./images/go blah.mp4" controls="controls">';
+                console.log("video");
+                console.log(picture.innerHTML.getText())
+            }
+            else{
+                picture.innerHTML = '<img src='+pictures[index]+'>';
+            }
             
         }
         
