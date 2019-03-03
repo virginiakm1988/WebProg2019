@@ -10,7 +10,7 @@
         <h2 class="image-viewer__title ">Image viewer</h2>
         
         <div class = "image-viewer__main">
-            <div  class="image-viewer__button" >
+            <div id = "backBtn" class="image-viewer__button" >
                 <img onclick="backIMG()" src="./images/back.png">
 
             </div>
@@ -19,7 +19,7 @@
                 <div id="source" class="image-viewer__display-source-wrapper" >source: Reddit \mean jokes</div>
 
             </div>
-            <div class="image-viewer__button">
+            <div id = 'nextBtn' class="image-viewer__button">
                 <img onclick="nextIMG()" src="./images/next.png">
             </div>
         </div>
@@ -30,10 +30,19 @@
     <script type="text/javascript">
         var pictures = ['video','./images/meme01.jpg','./images/meme02.jpg','./images/meme03.jpg','./images/meme04.jpg','./images/meme05.jpg']
         var index = -1;
+        
+        function changeBtn(){
+            document.getElementById('nextBtn').className = "newBtn";
+            document.getElementById('backBtn').className = "newBtn";
+        }
+
         function pending(){
             var picture = document.getElementById("display");
             picture.innerHTML = "<img src='./images/loading.gif'>";
+            setTimeout('changeBtn()',1000);
+           
         };
+
     
         function nextIMG(){
             if(index == pictures.length-1){
@@ -43,29 +52,28 @@
                 index = index+1;
             }
             pending();
-            setTimeout('changeIMG(index)',1000);
-
-            
-            
+            setTimeout('changeIMG(index)',1300);            
         }
         function backIMG(){
-            if(index == 0){
+            if(index <= 0){
                 index = pictures.length-1;
             }
             else{
                 index = index-1;
             }
             pending();
-
-            setTimeout('changeIMG(index)',1000);
+            setTimeout('changeIMG(index)',1300);
                         
         };
 
         function changeIMG(index){
+            document.getElementById('nextBtn').className = "image-viewer__button";
+            document.getElementById('backBtn').className = "image-viewer__button";
             var picture = document.getElementById("display");
 
+            console.log(index,pictures[index])
             if (pictures[index] == 'video') {
-                picture.innerHTML = '<video id = "display" src="./images/go blah.mp4" controls="controls">';
+                picture.innerHTML = '<video id = "display" autoplay src="./images/go blah.mp4" controls="controls">';
             }
             else{
                 picture.innerHTML = '<img src='+pictures[index]+'>';
