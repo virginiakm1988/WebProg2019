@@ -15,8 +15,8 @@
 
             </div>
             <div id  = 'display' class="image-viewer__display" >
-                <img src="./images/pizza01.jpg">
-                <div id="source" class="image-viewer__display-source-wrapper" >source</div>
+                <img  src="./images/pizza01.jpg">
+                <div id="source" class="image-viewer__display-source-wrapper" >source: Reddit \mean jokes</div>
 
             </div>
             <div class="image-viewer__button">
@@ -30,6 +30,11 @@
     <script type="text/javascript">
         var pictures = ['video','./images/meme01.jpg','./images/meme02.jpg','./images/meme03.jpg','./images/meme04.jpg','./images/meme05.jpg']
         var index = -1;
+        function pending(){
+            var picture = document.getElementById("display");
+            picture.innerHTML = "<img src='./images/loading.gif'>";
+        };
+    
         function nextIMG(){
             if(index == pictures.length-1){
                 index = 0;
@@ -37,19 +42,10 @@
             else{
                 index = index+1;
             }
+            pending();
+            setTimeout('changeIMG(index)',1000);
+
             
-            var picture = document.getElementById("display");
-
-            if (pictures[index] == 'video') {
-                picture.innerHTML = '<video id = "display" src="./images/go blah.mp4" controls="controls">';
-                console.log("video");
-                console.log(picture.innerHTML.getText())
-            }
-            else{
-                picture.innerHTML = '<img src='+pictures[index]+'>';
-            }
-             
-
             
         }
         function backIMG(){
@@ -59,19 +55,24 @@
             else{
                 index = index-1;
             }
-            
-           var picture = document.getElementById("display");
+            pending();
+
+            setTimeout('changeIMG(index)',1000);
+                        
+        };
+
+        function changeIMG(index){
+            var picture = document.getElementById("display");
 
             if (pictures[index] == 'video') {
                 picture.innerHTML = '<video id = "display" src="./images/go blah.mp4" controls="controls">';
-                console.log("video");
-                console.log(picture.innerHTML.getText())
             }
             else{
                 picture.innerHTML = '<img src='+pictures[index]+'>';
             }
-            
+
         }
+
         
     </script>
     </body>

@@ -49,6 +49,8 @@ body {
 .image-viewer__button img:hover {
 
 	border: 1px solid black;
+	width: 90px;
+	height: auto;
 	border-radius: 50%;
 }
 
@@ -89,6 +91,7 @@ body {
 #source {
 	display: inline;
 	color: black;
+	border: black solid;
 }
 
 .disabled {
