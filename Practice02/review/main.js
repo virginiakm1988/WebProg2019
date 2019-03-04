@@ -10,7 +10,7 @@ function prev(){
         curpic = 3
     }
 
-    target.src = imageurl+curpic + '.jpg'
+    target.src = imageurl + curpic + '.jpg'
 }
 function next(){
     var target = document.querySelector("#display")
