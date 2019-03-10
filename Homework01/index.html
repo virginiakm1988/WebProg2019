@@ -24,11 +24,11 @@
                 </ul>
             </section>
             <footer class="todo-app__footer" id = "todo-footer">
-                <div class="todo-app__total" id = "todo-count">total</div>
+                <div class="todo-app__total" id = "todo-count">total: 0, 0 left</div>
                 <ul class="todo-app__view-buttons">
-                    <button onclick="showAllElements()">all</button>
-                    <button onclick="showActiveElement()">active</button>
-                    <button onclick="showCompletedElement()">completed</button>
+                    <button onclick="showElements('all')">all</button>
+                    <button onclick="showElements('active')">active</button>
+                    <button onclick="showElements('Completed')">completed</button>
                     
                 </ul>
                 <button onclick="deleteAll()" class="todo-app__clean ">clean</button>                

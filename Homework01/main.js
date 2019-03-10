@@ -8,6 +8,7 @@ input.addEventListener('keyup', event => {
   	addElements(input);
   	deleteElement();
   	itemCompleted();
+  	count();
   }
 });
 
@@ -23,16 +24,14 @@ var deleteElement = function()
 	    todo_list_data.splice( todo_list_data.indexOf(textNode), 1 );
 
 	    items_cnt --;
-	    var todoCount = document.getElementById("todo-count");
-	    todoCount.innerHTML= items_cnt;
+	  //  var todoCount = document.getElementById("todo-count");
+	   // todoCount.innerHTML= items_cnt;
+	  	count();
 	  }
 	}
 }
 
-//delete elements
 var addElements= function(input){
-  	//add the lists and values
-
   	// <div class="todo-app__item">
   	const list = document.getElementById("todo-list");
   	addNewElements(list,input.value,false);
@@ -40,7 +39,8 @@ var addElements= function(input){
   	todo_list_data[items_cnt] = newItem;
   	items_cnt++;
   	var todoCount = document.getElementById("todo-count");
-	todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
+	count();
+	//todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
 	input.value="";
 }
 
@@ -69,6 +69,7 @@ var itemCompleted=function()
 					node.style["opacity"] = 0.5;
 					todo_list_data[i]["isComplete"] = true;	
 					checklabel.style["background-color"]="green";
+
 	    		}
 	    		else{
 	    			node.style["textDecoration"] = "none";
@@ -76,6 +77,7 @@ var itemCompleted=function()
 					todo_list_data[i]["isComplete"] = false;
 					checklabel.style["background-color"]="grey";
 	    		}
+	    		count();
 	    		
 	    	}
 	    }
@@ -124,10 +126,6 @@ var addNewElements=function(list,item_text,isCompleted)
   	list.appendChild(todo_item);
 }
 
-var showAllElements = function()
-{
-	showElements("all");
-}
 
 var showElements = function(status){
 	const list = document.getElementById("todo-list");
@@ -157,17 +155,22 @@ var showElements = function(status){
 		}
 				
 	}
-	 deleteElement();
+	deleteElement();
   	itemCompleted();
+  	count();
 }
 
 var showCompletedElement = function(){
 	showElements("Completed");
 }
-
 var showActiveElement = function(){
 	showElements("active");
 }
+var showAllElements = function()
+{
+	showElements("all");
+}
+
 
 var deleteAll = function()
 {
@@ -180,6 +183,16 @@ var deleteAll = function()
 		todo_list_data.pop()
 		items_cnt--
 	}
-	var todoCount = document.getElementById("todo-count");
+	count();
+	//var todoCount = document.getElementById("todo-count");
+	//todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
+}
+
+var count = function(){
+	let todoCount = document.getElementById("todo-count");
+
+	let left = todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
 	todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
+	todoCount.innerHTML = "total: "+items_cnt +" , "+left+"left";
+
 }

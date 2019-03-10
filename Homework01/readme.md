@@ -1,0 +1,8 @@
+addElements
+deleteElement
+itemCompleted
+addNewElements
+showElements
+showElements
+deleteAll
+count
