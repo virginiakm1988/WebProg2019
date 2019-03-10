@@ -1,8 +1,7 @@
-addElements
-deleteElement
-itemCompleted
-addNewElements
-showElements
-showElements
-deleteAll
-count
+##addElements()
+##deleteElement()
+##itemCompleted()
+##addNewElements()
+##showElements()
+##deleteAll()
+##count()
