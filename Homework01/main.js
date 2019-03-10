@@ -1,8 +1,7 @@
 var todo_list_data = [];
 var items_cnt = 0;
 
-
-//add new items
+//add new input
 const input = document.getElementById('todo-input');
 input.addEventListener('keyup', event => {
   if (event.keyCode === 13 && event.target.value !== '')  {
@@ -21,7 +20,6 @@ var deleteElement = function()
 	    var div = this.parentElement;
 	    div.style.display = "none";
 	    var textNode = div.children[1].innerHTML;
-
 	    todo_list_data.splice( todo_list_data.indexOf(textNode), 1 );
 
 	    items_cnt --;
@@ -38,7 +36,6 @@ var addElements= function(input){
   	// <div class="todo-app__item">
   	const list = document.getElementById("todo-list");
   	addNewElements(list,input.value,false);
-  	
   	var newItem = { node: input.value , isComplete: false };
   	todo_list_data[items_cnt] = newItem;
   	items_cnt++;
@@ -52,7 +49,6 @@ var itemCompleted=function()
 {
 	const complete_checkbox = document.getElementsByClassName("todo-app__checkbox");
 	var cnt;
-	
 	for(cnt = 0 ; cnt < complete_checkbox.length ; cnt++)
 	{
 		complete_checkbox[cnt].onclick = function() {
@@ -71,8 +67,7 @@ var itemCompleted=function()
 	    		{
 	    			node.style["textDecoration"] = "line-through";
 					node.style["opacity"] = 0.5;
-					todo_list_data[i]["isComplete"] = true;
-					
+					todo_list_data[i]["isComplete"] = true;	
 					checklabel.style["background-color"]="green";
 	    		}
 	    		else{
@@ -131,22 +126,10 @@ var addNewElements=function(list,item_text,isCompleted)
 
 var showAllElements = function()
 {
-	const list = document.getElementById("todo-list");
-	
-    var lis = list.getElementsByTagName("li")
-	while(lis.length > 0) {
-		list.removeChild(lis[0]);
-	} 
-	var i = 0;
-	for (i = 0; i < items_cnt; i++)
-	{
-		var item_text = todo_list_data[i]["node"];
-		console.log(todo_list_data[i]["isComplete"])
-		addNewElements(list,item_text,todo_list_data[i]["isComplete"])
-	}	
-
+	showElements("all");
 }
-var showCompletedElement = function(){
+
+var showElements = function(status){
 	const list = document.getElementById("todo-list");
     var lis = list.getElementsByTagName("li")
 	while(lis.length > 0) {
@@ -155,35 +138,35 @@ var showCompletedElement = function(){
 	var i = 0;
 	for (i = 0; i < items_cnt; i++)
 	{	
-		if(todo_list_data[i]["isComplete"] == true)
-		{
-			var item_text = todo_list_data[i]["node"];
-			console.log(item_text)
-			addNewElements(list,item_text,true)
-		}	
+		var item_text = todo_list_data[i]["node"];
+		if(status=="Completed"){
+			if(todo_list_data[i]["isComplete"] == true)
+			{
+				addNewElements(list,item_text,true)
+			}
+		}
+		else if (status == "active"){
+			if(todo_list_data[i]["isComplete"] == false)
+			{
+				console.log("active")
+				addNewElements(list,item_text,false)
+			}
+		}
+		else if (status == "all"){
+			addNewElements(list,item_text,todo_list_data[i]["isComplete"])
+		}
+				
 	}
-	  	deleteElement();
+	 deleteElement();
   	itemCompleted();
 }
 
+var showCompletedElement = function(){
+	showElements("Completed");
+}
+
 var showActiveElement = function(){
-	const list = document.getElementById("todo-list");
-	
-    var lis = list.getElementsByTagName("li")
-	while(lis.length > 0) {
-	list.removeChild(lis[0]);
-	} 
-	var i = 0;
-	for (i = 0; i < items_cnt; i++)
-	{	
-		if(todo_list_data[i]["isComplete"] == false)
-		{
-			var item_text = todo_list_data[i]["node"];
-		console.log(item_text)
-		addNewElements(list,item_text,false)
-		}
-		
-	}	
+	showElements("active");
 }
 
 var deleteAll = function()
