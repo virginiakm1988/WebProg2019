@@ -14,7 +14,6 @@ input.addEventListener('keyup', event => {
 
 const clear = document.getElementById("clear");
 clear.addEventListener("click",event=>{
-	console.log("clicked");
 	deleteAll();
 })
 
@@ -28,7 +27,6 @@ var deleteElement = function()
 	    div.style.display = "none";
 	    var textNode = div.children[1].innerHTML;
 	    todo_list_data.splice( todo_list_data.indexOf(textNode), 1 );
-
 	    items_cnt --;
 	  	count();
 	  }
@@ -55,10 +53,8 @@ var itemCompleted=function()
 	{
 		complete_checkbox[cnt].onclick = function() {
 	    var div = this.parentElement;
-	    console.log(div);
 	    const node = div.children[1];
-	    console.log(todo_list_data)
-	    const checklabel = div.children[0].children[1]
+	    const checklabel = div.children[0].children[1];
 
 	    let i = 0;
 	    for(i = 0; i < items_cnt; i++){
@@ -107,7 +103,6 @@ var addNewElements=function(list,item_text,isCompleted)
   	del.setAttribute('class', "todo-app__item-x");
 
   	 if(isCompleted){
-  	 	console.log(isCompleted);
   		todo_item_detail.style["textDecoration"] = "line-through";
 		todo_item_detail.style["opacity"] = 0.5;
 		checkbx_label.style["background-color"]="green";
