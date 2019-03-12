@@ -12,6 +12,12 @@ input.addEventListener('keyup', event => {
   }
 });
 
+const clear = document.getElementById("clear");
+clear.addEventListener("click",event=>{
+	console.log("clicked");
+	deleteAll();
+})
+
 var deleteElement = function()
 {
 	var close = document.getElementsByClassName("todo-app__item-x");
@@ -163,7 +169,6 @@ var deleteAll = function()
 
 var count = function(){
 	let todoCount = document.getElementById("todo-count");
-
 	let left = todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
 	todoCount.innerHTML= todo_list_data.filter(ele => !ele.isComplete).length;
 	todoCount.innerHTML = "total: "+items_cnt +" , "+left+" left";
