@@ -17,6 +17,7 @@ clear.addEventListener("click",event=>{
 	deleteAll();
 })
 
+
 var deleteElement = function()
 {
 	var close = document.getElementsByClassName("todo-app__item-x");
