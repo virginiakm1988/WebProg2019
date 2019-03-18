@@ -13,7 +13,7 @@ let framecount = 0;
 // assets from: https://github.com/sourabhv/FlapPyBird/tree/master/assets
 
 function preload() {
-    bgImg = loadImage("./assets/sprites/background-day.png")
+    bgImg = loadImage("./assets/sprites/background-night.png")
     baseImg = loadImage("assets/sprites/base.png");
     wave_sound = loadSound("./assets/audio/wing.wav");
     die_sound = loadSound("./assets/audio/wing.wav");
@@ -120,7 +120,7 @@ colorbird−{flap}.png`", where ${color} = [‘red’, ‘blue’, ‘yellow’]
 function getRandomInt(min,max) {
     return Math.floor(Math.random() * Math.floor(max-min+1)+min);
   }
-
+  
 const pipeColor = ['red', 'green'];
 const directions = ['lower','upper'];  
 function Pipe(){
