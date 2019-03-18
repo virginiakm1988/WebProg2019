@@ -49,21 +49,24 @@ function draw() {
     if(framecount %50 == 0){
         pipes.push(new Pipe());
         framecount ++;
-        console.log(framecount);
+        
     }
     else{
         framecount++;
     }
-
+    console.log("length", pipes.length)
     for (var i = 0; i < pipes.length; i++){
         pipes[i].show();
         pipes[i].update();
+        if(pipes[i].offscrean()){
+            pipes.splice(i,1);
+        }
     }
 }
 
 function keyPressed() {
     if(keyCode === 32){
-        console.log("pressed");
+        
         bird.up();
     }
 };
@@ -92,7 +95,7 @@ function Bird(){
     {
         this.velocity += this.gravity;
         this.y += this.velocity;
-        this.velocity *=0.97;
+        this.velocity *=0.99;
         let flapIndex = getRandomInt(0,2);
         this.imgPath =  `./assets/sprites/${color[colorIndex]}bird-${flap[flapIndex]}.png`;
         this.img = loadImage(this.imgPath);
@@ -132,7 +135,7 @@ function Pipe(){
     if (this.direction == 0){
         this.y = getRandomInt(450,700);
     }
-    else{
+    else{  
         this.y = getRandomInt(-200,10);
     }
     this.imgPath =  `./assets/sprites/pipe-${pipeColor[getRandomInt(0,1)]}-${directions[this.direction]}.png`;
@@ -140,16 +143,17 @@ function Pipe(){
 
     this.show = function(){     //pipe-green-lower.png
         //console.log("pipe",width, bgScale);
-        console.log(this.y);
+       
         image(this.img ,this.x,this.y);
     }
-    this.update = function(){
+    this.update = f unction(){
         this.x += this.velocity;
     }
-    this.hit = function(){
+    this.hit = function (){
         //the hir function
+        die_sound.play();
     }
-}
+}    
 
 
 
