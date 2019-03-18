@@ -2,9 +2,11 @@ let cvsWrapper = null;
 let bgImg;
 let bgScale;
 var bird;
+var pipes = [];
 let wave_sound;
 let die_sound;
 let baseImg;
+let framecount = 0;
 
 
 
@@ -31,6 +33,7 @@ function setup() {
     // setup code below
     bgScale = width/bgImg.width;
     bird = new Bird();
+    pipes.push(new Pipe());
     
 
 }
@@ -42,6 +45,20 @@ function draw() {
     image(baseImg);
     bird.show();
     bird.update();
+   
+    if(framecount %50 == 0){
+        pipes.push(new Pipe());
+        framecount ++;
+        console.log(framecount);
+    }
+    else{
+        framecount++;
+    }
+
+    for (var i = 0; i < pipes.length; i++){
+        pipes[i].show();
+        pipes[i].update();
+    }
 }
 
 function keyPressed() {
@@ -53,11 +70,10 @@ function keyPressed() {
 
 const color = ['red', 'blue', 'yellow'];
 const flap = ['downflap','midflap', 'upflap'];  
-let colorIndex =getRandomInt(3);
+let colorIndex =getRandomInt(0,2);
 function Bird(){
 
     this.imgPath = `./assets/sprites/${color[colorIndex]}bird-${flap[0]}.png`;
-    
     this.y = height/2;
     this.x = 64;
     this.img = loadImage(this.imgPath);
@@ -66,7 +82,7 @@ function Bird(){
     this.lift = -7;
 
     this.show = function(){
-        let flapIndex = getRandomInt(3);
+        let flapIndex = getRandomInt(0,2);
        //imgPath = `./assets/sprites/${color[colorIndex]}bird-${flap[flapIndex]}.png`;
        // this.img = loadImage(imgPath);
         image(this.img ,this.x,this.y );
@@ -77,7 +93,7 @@ function Bird(){
         this.velocity += this.gravity;
         this.y += this.velocity;
         this.velocity *=0.97;
-        let flapIndex = getRandomInt(3);
+        let flapIndex = getRandomInt(0,2);
         this.imgPath =  `./assets/sprites/${color[colorIndex]}bird-${flap[flapIndex]}.png`;
         this.img = loadImage(this.imgPath);
         if(this.y > height){
@@ -90,7 +106,7 @@ function Bird(){
     this.up=function(){
         wave_sound.play();
         this.velocity+= this.lift;
-    }
+    }   
 }
 
 /*
@@ -98,6 +114,42 @@ colorbird−{flap}.png`", where ${color} = [‘red’, ‘blue’, ‘yellow’]
 */ 
 
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(min,max) {
+    return Math.floor(Math.random() * Math.floor(max-min+1)+min);
   }
+
+const pipeColor = ['red', 'green'];
+const directions = ['lower','upper'];  
+function Pipe(){
+    this.top = random(height/2);
+    this.bottom = random(height/2);
+    this.x = width;//0;
+    this.w = 20;
+    this.y = getRandomInt(450,700);// 450; //range == 450 or up
+    this.velocity = -2;
+    this.direction = getRandomInt(0,1);
+    this.colorIndex = getRandomInt(0,1);
+    if (this.direction == 0){
+        this.y = getRandomInt(450,700);
+    }
+    else{
+        this.y = getRandomInt(-200,10);
+    }
+    this.imgPath =  `./assets/sprites/pipe-${pipeColor[getRandomInt(0,1)]}-${directions[this.direction]}.png`;
+    this.img = loadImage(this.imgPath);
+
+    this.show = function(){     //pipe-green-lower.png
+        //console.log("pipe",width, bgScale);
+        console.log(this.y);
+        image(this.img ,this.x,this.y);
+    }
+    this.update = function(){
+        this.x += this.velocity;
+    }
+    this.hit = function(){
+        //the hir function
+    }
+}
+
+
+
