@@ -6,6 +6,7 @@ var pipes = [];
 let wave_sound;
 let die_sound;
 let hit_sound;
+let point_sound;
 let baseImg;
 let framecount = 0;
 let angle = 0.0;
@@ -25,6 +26,7 @@ function preload() {
     wave_sound = loadSound("./assets/audio/wing.wav");
     die_sound = loadSound("./assets/audio/die.wav");
     hit_sound = loadSound("./assets/audio/hit.wav");
+    point_sound = loadSound("./assets/audio/point.wav");
     game_over = loadImage("./assets/sprites/gameover.png");
 
 }
@@ -38,13 +40,11 @@ function setup() {
         cvsWrapper.offsetHeight
     );
     myCanvas.parent("canvasWrapper");
-
     // setup code below
     bgScale = width/bgImg.width;
     bird = new Bird();
     pipes.push(new Pipe());
-    
-
+ 
 }
   
 function draw() {
@@ -52,16 +52,10 @@ function draw() {
     background(0); 
     image(bgImg,0,0,bgImg.width*bgScale,bgImg.height*bgScale);
     image(baseImg,width-baseImg.width*bgScale,height-baseImg.height,width*bgScale);
-
-
-
-
-
-
     bird.show();  
     bird.update();
    
-    if(framecount % 20 == 0){
+    if(framecount % 100 == 0){
         pipes.push(new Pipe());
         framecount ++;
     }
@@ -72,16 +66,16 @@ function draw() {
     for (var i = 0; i < pipes.length; i++){
         pipes[i].show();
         pipes[i].update();
-   //     if(pipes[i].offscreen()){
-     //       pipes.splice(i,1);
-       // }
-     //   console.log(pipes[i].hits(bird));
         if(pipes[i].hits(bird)){
             console.log("hit");
             bird.isAlive = false;
             if(!bird.isAlive&& !isDead){
                 hit_sound.play();
             }
+        }
+        if(pipes[i].pass(bird)){
+            console.log("pass");
+            point_sound.play();
         }
 
         if(!bird.isAlive){
@@ -134,12 +128,7 @@ function Bird(){
         let flapIndex = getRandomInt(0,2);
         this.imgPath =  `./assets/sprites/${color[colorIndex]}bird-${flap[flapIndex]}.png`;
         this.img = loadImage(this.imgPath);
-        if(this.y > height){
-            
-        
-        //    this.y = bgImg.height+(height-bgImg.height);
-        //    this.velocity = 0;
-        }
+      
     } 
     this.up=function(){
         wave_sound.play();
@@ -164,15 +153,14 @@ function getRandomInt(min,max) {
 const pipeColor = ['red', 'green'];
 const directions = ['lower','upper'];  
 function Pipe(){
-    
+    this.isPass = false;
     this.x = width;
-    
     this.y = getRandomInt(450,700);// 450; //range == 450 or up
     this.velocity = -3;
     this.direction = getRandomInt(0,1);
-    this.colorIndex = 0;// getRandomInt(0,1);
+    this.colorIndex = getRandomInt(0,1);
     if (this.direction == 0){
-        this.y = getRandomInt(450,800);
+        this.y = getRandomInt(450,600);
     }
     else{  
         this.y = getRandomInt(-200,0);
@@ -201,32 +189,33 @@ function Pipe(){
         }
     }
     this.hits = function(bird){
-        //the hir function
-       // die_sound.play();
-       //return false;
-     //  console.log( bird.x ,this.x,this.x +this.img.width,this.img.width);
        if(bird.x>this.x && (bird.x < this.x +this.img.width)){
-    //       console.log("area")
             if(this.direction == false){
-    //            console.log("lower")
                 if(bird.y>  this.y){
-     //               console.log("yessss")
                     this.colorIndex = 1;
                     return true;
                 }
             }
             else{
-    //            console.log("upper")
                 if(bird.y < this.y+this.img.height)
                 {
-    //                console.log("git");
                     return true;
                 }
             }
            
        }  
        return false;
-    
+    }
+    this.pass = function(bird){
+        console.log(this.x,bird.x)
+        if(bird.x>this.x && !this.isPass )
+        {
+
+            this.isPass = true;
+            return true;
+        }
+        return false;
+        
     }
 
        
