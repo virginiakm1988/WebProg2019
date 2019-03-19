@@ -5,6 +5,7 @@ var bird;
 var pipes = [];
 let wave_sound;
 let die_sound;
+let hit_sound;
 let baseImg;
 let framecount = 0;
 let angle = 0.0;
@@ -12,6 +13,7 @@ let jitter = 0.0000000000001;
 let backgrounds = ['day','night'];
 let bgIndex = getRandomInt(0,1);
 let game_over ;
+let isDead = false;
 
 
 
@@ -21,7 +23,8 @@ function preload() {
     bgImg = loadImage(`./assets/sprites/background-${backgrounds[bgIndex]}.png`)
     baseImg = loadImage("./assets/sprites/base.png");
     wave_sound = loadSound("./assets/audio/wing.wav");
-    die_sound = loadSound("./assets/audio/wing.wav");
+    die_sound = loadSound("./assets/audio/die.wav");
+    hit_sound = loadSound("./assets/audio/hit.wav");
     game_over = loadImage("./assets/sprites/gameover.png");
 
 }
@@ -43,12 +46,12 @@ function setup() {
     
 
 }
-
+  
 function draw() {
     // Render function (called per frame.)
-    background(0);
+    background(0); 
     image(bgImg,0,0,bgImg.width*bgScale,bgImg.height*bgScale);
-    image(baseImg);
+    image(baseImg,width-baseImg.width*bgScale,height-baseImg.height,width*bgScale);
 
 
 
@@ -75,13 +78,19 @@ function draw() {
      //   console.log(pipes[i].hits(bird));
         if(pipes[i].hits(bird)){
             console.log("hit");
-            die_sound.play();
-           
             bird.isAlive = false;
+            if(!bird.isAlive&& !isDead){
+                hit_sound.play();
+            }
         }
 
         if(!bird.isAlive){
+            bird.gravity+=0.001;
             image(game_over,width/2-game_over.width/2,height/2-game_over.height/2);
+            if(!isDead){
+                die_sound.play();
+                isDead = true;
+            }
         }
     }
 }
@@ -136,6 +145,11 @@ function Bird(){
         wave_sound.play();
         this.velocity+= this.lift;
     }   
+    this.hit_ground= function(){
+        if(this.y > height/2-game_over){
+            this.isAlive = false;
+        }
+    }
 }
 
 /*
@@ -151,7 +165,7 @@ const pipeColor = ['red', 'green'];
 const directions = ['lower','upper'];  
 function Pipe(){
     
-    this.x = width/2;//0;
+    this.x = width;
     
     this.y = getRandomInt(450,700);// 450; //range == 450 or up
     this.velocity = -3;
@@ -211,10 +225,9 @@ function Pipe(){
             }
            
        }  
-     //  console.log("bug")
        return false;
     
-    }// end of hit function
+    }
 
        
         
