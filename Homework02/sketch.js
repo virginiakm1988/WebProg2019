@@ -15,6 +15,7 @@ let backgrounds = ['day','night'];
 let bgIndex = getRandomInt(0,1);
 let game_over ;
 let isDead = false;
+let score = 0;
 
 
 
@@ -76,6 +77,7 @@ function draw() {
         if(pipes[i].pass(bird)){
             console.log("pass");
             point_sound.play();
+            score++;
         }
 
         if(!bird.isAlive){
