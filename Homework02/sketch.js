@@ -154,7 +154,7 @@ function Pipe(){
         this.x += this.velocity;
     }
     this.offscreen = function(){
-        if(this.x < -2*this.w){
+        if(this.x < -3*this.w){
             return true;
         }
         else {
