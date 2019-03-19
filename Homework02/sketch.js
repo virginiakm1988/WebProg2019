@@ -2,6 +2,7 @@ let cvsWrapper = null;
 let bgImg;
 let bgScale;
 var bird;
+let score;
 var pipes = [];
 let wave_sound;
 let die_sound;
@@ -15,7 +16,7 @@ let backgrounds = ['day','night'];
 let bgIndex = getRandomInt(0,1);
 let game_over ;
 let isDead = false;
-let score = 0;
+
 
 
 
@@ -45,7 +46,7 @@ function setup() {
     bgScale = width/bgImg.width;
     bird = new Bird();
     pipes.push(new Pipe());
- 
+    score = new Score()
 }
   
 function draw() {
@@ -53,16 +54,17 @@ function draw() {
     background(0); 
     image(bgImg,0,0,bgImg.width*bgScale,bgImg.height*bgScale);
     image(baseImg,width-baseImg.width*bgScale,height-baseImg.height,width*bgScale);
-    bird.show();  
-    bird.update();
-   
-    if(framecount % 100 == 0){
+    
+    score.show();
+    if(framecount % 70 == 0){
         pipes.push(new Pipe());
         framecount ++;
     }
     else{
         framecount++;
     }
+
+    
     //console.log("length", pipes.length)
     for (var i = 0; i < pipes.length; i++){
         pipes[i].show();
@@ -74,10 +76,10 @@ function draw() {
                 hit_sound.play();
             }
         }
-        if(pipes[i].pass(bird)){
+        if(pipes[i].pass(bird)&&bird.isAlive){
             console.log("pass");
             point_sound.play();
-            score++;
+            score.add();
         }
 
         if(!bird.isAlive){
@@ -89,6 +91,13 @@ function draw() {
             }
         }
     }
+    angle+=jitter;
+    
+    bird.show();  
+    translate(bird.x,bird.y);
+    bird.update();
+    rotate(angle)
+
 }
 
 function keyPressed() {
@@ -146,6 +155,24 @@ function Bird(){
 /*
 colorbird−{flap}.png`", where ${color} = [‘red’, ‘blue’, ‘yellow’], and ${flap} = [‘downflap’, ‘midflap’, ‘upflap’]
 */ 
+
+function Score(){
+    this.score = 0;
+    this.imgPath =  `./assets/sprites/0.png`;
+    this.img = loadImage(this.imgPath);
+    this.index = ['0','1','2','3','4','5','6','7','8','9']
+    this.show=function()
+    {
+        image(this.img,width/2,300);
+    }
+    this.add = function(){
+        this.score++;
+        console.log(this.index[this.score%10])
+        this.imgPath =  `./assets/sprites/${this.index[this.score%10]}.png`;
+        this.img = loadImage(this.imgPath);
+        image(this.img,width/2,300);
+    }
+}
 
 
 function getRandomInt(min,max) {
