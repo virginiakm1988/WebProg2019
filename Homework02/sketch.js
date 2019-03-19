@@ -7,16 +7,22 @@ let wave_sound;
 let die_sound;
 let baseImg;
 let framecount = 0;
+let angle = 0.0;
+let jitter = 0.0000000000001;
+let backgrounds = ['day','night'];
+let bgIndex = getRandomInt(0,1);
+let game_over ;
 
 
 
 // assets from: https://github.com/sourabhv/FlapPyBird/tree/master/assets
 
 function preload() {
-    bgImg = loadImage("./assets/sprites/background-night.png")
-    baseImg = loadImage("assets/sprites/base.png");
+    bgImg = loadImage(`./assets/sprites/background-${backgrounds[bgIndex]}.png`)
+    baseImg = loadImage("./assets/sprites/base.png");
     wave_sound = loadSound("./assets/audio/wing.wav");
     die_sound = loadSound("./assets/audio/wing.wav");
+    game_over = loadImage("./assets/sprites/gameover.png");
 
 }
 
@@ -43,13 +49,18 @@ function draw() {
     background(0);
     image(bgImg,0,0,bgImg.width*bgScale,bgImg.height*bgScale);
     image(baseImg);
+
+
+
+
+
+
     bird.show();  
     bird.update();
    
     if(framecount % 20 == 0){
         pipes.push(new Pipe());
         framecount ++;
-        
     }
     else{
         framecount++;
@@ -58,20 +69,29 @@ function draw() {
     for (var i = 0; i < pipes.length; i++){
         pipes[i].show();
         pipes[i].update();
-        if(pipes[i].offscreen()){
-            pipes.splice(i,1);
-        }
-
+   //     if(pipes[i].offscreen()){
+     //       pipes.splice(i,1);
+       // }
+     //   console.log(pipes[i].hits(bird));
         if(pipes[i].hits(bird)){
             console.log("hit");
+            die_sound.play();
+           
+            bird.isAlive = false;
+        }
+
+        if(!bird.isAlive){
+            image(game_over,width/2-game_over.width/2,height/2-game_over.height/2);
         }
     }
 }
 
 function keyPressed() {
     if(keyCode === 32){
+        if(bird.isAlive){
+            bird.up();
+        }
         
-        bird.up();
     }
 };
 
@@ -79,7 +99,8 @@ const color = ['red', 'blue', 'yellow'];
 const flap = ['downflap','midflap', 'upflap'];  
 let colorIndex =getRandomInt(0,2);
 function Bird(){
-
+    
+    this.isAlive = true;
     this.imgPath = `./assets/sprites/${color[colorIndex]}bird-${flap[0]}.png`;
     this.y = height/2;
     this.x = 64;
@@ -97,6 +118,7 @@ function Bird(){
     }
     this.update = function()
     {
+        
         this.velocity += this.gravity;
         this.y += this.velocity;
         this.velocity *=0.99;
@@ -109,7 +131,7 @@ function Bird(){
         //    this.y = bgImg.height+(height-bgImg.height);
         //    this.velocity = 0;
         }
-    }
+    } 
     this.up=function(){
         wave_sound.play();
         this.velocity+= this.lift;
@@ -128,9 +150,8 @@ function getRandomInt(min,max) {
 const pipeColor = ['red', 'green'];
 const directions = ['lower','upper'];  
 function Pipe(){
-    this.top = random(height/2);
-    this.bottom = random(height/2);
-    this.x = width;//0;
+    
+    this.x = width/2;//0;
     
     this.y = getRandomInt(450,700);// 450; //range == 450 or up
     this.velocity = -3;
@@ -145,35 +166,59 @@ function Pipe(){
     this.imgPath =  `./assets/sprites/pipe-${pipeColor[this.colorIndex]}-${directions[this.direction]}.png`;
     this.img = loadImage(this.imgPath);
     this.w = this.img.width;
+   // this.top = this.img.height;//random(height/2);
+    this.bottom = random(height/2);
     this.show = function(){     //pipe-green-lower.png
-        //console.log("pipe",width, bgScale);
+        //console.log("pipe",width   , bgScale);
        
         image(this.img ,this.x,this.y);
     }
     this.update = function(){
+        
         this.x += this.velocity;
+        
     }
     this.offscreen = function(){
-        if(this.x < -3*this.w){
+        if(this.x < -60){
             return true;
         }
         else {
             return false;
         }
     }
-    this.hits = function (bird){
+    this.hits = function(bird){
         //the hir function
        // die_sound.play();
-       console.log(directions[this.direction],bird.y, this.top, this.bottom );
-        if(bird.y > this.top || bird.y< this.bottom){
-            if(bird.x > this.x && bird.x < this.x - this.w){
-                console.log("yessss")
-                this.colorIndex = 1;
-                return true;
+       //return false;
+     //  console.log( bird.x ,this.x,this.x +this.img.width,this.img.width);
+       if(bird.x>this.x && (bird.x < this.x +this.img.width)){
+    //       console.log("area")
+            if(this.direction == false){
+    //            console.log("lower")
+                if(bird.y>  this.y){
+     //               console.log("yessss")
+                    this.colorIndex = 1;
+                    return true;
+                }
             }
-        }
-        return false;
-    }
+            else{
+    //            console.log("upper")
+                if(bird.y < this.y+this.img.height)
+                {
+    //                console.log("git");
+                    return true;
+                }
+            }
+           
+       }  
+     //  console.log("bug")
+       return false;
+    
+    }// end of hit function
+
+       
+        
+    
 }    
 
 
