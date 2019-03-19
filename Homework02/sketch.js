@@ -43,10 +43,10 @@ function draw() {
     background(0);
     image(bgImg,0,0,bgImg.width*bgScale,bgImg.height*bgScale);
     image(baseImg);
-    bird.show();
+    bird.show();  
     bird.update();
    
-    if(framecount %50 == 0){
+    if(framecount % 20 == 0){
         pipes.push(new Pipe());
         framecount ++;
         
@@ -54,12 +54,16 @@ function draw() {
     else{
         framecount++;
     }
-    console.log("length", pipes.length)
+    //console.log("length", pipes.length)
     for (var i = 0; i < pipes.length; i++){
         pipes[i].show();
         pipes[i].update();
-        if(pipes[i].offscrean()){
+        if(pipes[i].offscreen()){
             pipes.splice(i,1);
+        }
+
+        if(pipes[i].hits(bird)){
+            console.log("hit");
         }
     }
 }
@@ -127,31 +131,48 @@ function Pipe(){
     this.top = random(height/2);
     this.bottom = random(height/2);
     this.x = width;//0;
-    this.w = 20;
+    
     this.y = getRandomInt(450,700);// 450; //range == 450 or up
-    this.velocity = -2;
+    this.velocity = -3;
     this.direction = getRandomInt(0,1);
-    this.colorIndex = getRandomInt(0,1);
+    this.colorIndex = 0;// getRandomInt(0,1);
     if (this.direction == 0){
-        this.y = getRandomInt(450,700);
+        this.y = getRandomInt(450,800);
     }
     else{  
-        this.y = getRandomInt(-200,10);
+        this.y = getRandomInt(-200,0);
     }
-    this.imgPath =  `./assets/sprites/pipe-${pipeColor[getRandomInt(0,1)]}-${directions[this.direction]}.png`;
+    this.imgPath =  `./assets/sprites/pipe-${pipeColor[this.colorIndex]}-${directions[this.direction]}.png`;
     this.img = loadImage(this.imgPath);
-
+    this.w = this.img.width;
     this.show = function(){     //pipe-green-lower.png
         //console.log("pipe",width, bgScale);
        
         image(this.img ,this.x,this.y);
     }
-    this.update = f unction(){
+    this.update = function(){
         this.x += this.velocity;
     }
-    this.hit = function (){
+    this.offscreen = function(){
+        if(this.x < -2*this.w){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    this.hits = function (bird){
         //the hir function
-        die_sound.play();
+       // die_sound.play();
+       console.log(directions[this.direction],bird.y, this.top, this.bottom );
+        if(bird.y > this.top || bird.y< this.bottom){
+            if(bird.x > this.x && bird.x < this.x - this.w){
+                console.log("yessss")
+                this.colorIndex = 1;
+                return true;
+            }
+        }
+        return false;
     }
 }    
 
