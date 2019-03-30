@@ -14,11 +14,11 @@ const CalcButton = (props) => {
       className={`calc-btn ${extraClass}`}
       onClick={onClick}
     >
-      {children}
+    {children}
     </button>
   );
 };
-
+//{children}
 
 CalcButton.propTypes = {
   className: PropTypes.string,
