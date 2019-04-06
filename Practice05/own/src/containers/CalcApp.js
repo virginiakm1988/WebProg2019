@@ -9,19 +9,48 @@ class CalcApp extends React.Component {
     super(props);
     this.state = {
       // TODO
-      input:""
+      input:"",
+      operators:[],
+      numbers:[],
+      finished: false
     };
   }
 
   resetState=() => {
     // TODO
-    this.setState({input:0});
+    this.setState({
+      // TODO
+      input:0,
+      operators:[],
+      numbers:[],
+      finished: false
+    });
   }
 
   addToInput(val){
-    this.setState({
-      input: this.state.input == '0'? val: String(this.state.input)+String(val)
-    });//this.state.input+val});
+    if (this.state.operators.length === 0)
+    {
+      this.setState({
+        operators:[],
+      numbers:[],
+      finished: false        
+      })
+    }
+    if (this.state.finished == false)
+    {
+      this.setState({
+      input: this.state.input === '0'? val: String(this.state.input)+String(val),
+      finished:false
+      });
+    }
+    else{
+      this.setState({
+        input:val,
+        finished:false
+      })
+    }
+    
+    
   }
   
   inputDot(){
@@ -48,9 +77,80 @@ class CalcApp extends React.Component {
      })
   }
 
+  inputOperators = (val) =>{
+
+    
+
+
+    if(this.state.finished === false)
+    {
+      var tempNumber = this.state.numbers;
+      tempNumber.push(this.state.input);
+
+      var tempOper = this.state.operators;
+      if(this.state.operators.length > 0)//operators inside, calculate it
+      {
+        console.log(tempNumber)
+      // var tempNumber = this.state.numbers;
+        var num1 = Number(tempNumber.pop());
+        var num2 = Number(tempNumber.pop());
+        var oper = this.state.operators.pop();
+        console.log("calculate numbers",num1,num2,oper)
+
+        if(oper ==="=")
+        {}
+
+        if(oper === "/")
+        {
+          tempNumber.push(Math.floor(num2/num1));
+        }
+        else if( oper === "*")
+        {
+          tempNumber.push(num1*num2)
+        }
+        else if (oper === "+"){
+          tempNumber.push(num1+num2)
+        }
+        else if (oper === '-'){
+          tempNumber.push(num2-num1)
+        }
+        
+      }
+      else{
+        
+        tempOper.push(val)
+      }
+
+      var num = tempNumber[tempNumber.length-1]
+
+      
+
+      this.setState({
+        input: num,
+        numbers: tempNumber,
+        finished : true,
+        operators: tempOper
+      })
+
+    }
+    else{
+      var tempOper = this.state.operators;
+      tempOper.pop();
+      tempOper.push(val)
+      this.setState({
+        operators:tempOper
+      })
+    }
+    
+    
+    console.log(this.state.numbers,this.state.finished, this.state.operators)
+  }
+
   showNotImplemented() {
     console.warn('This function is not implemented yet.');
   }
+
+
 
   render() {
     return (
@@ -65,31 +165,31 @@ class CalcApp extends React.Component {
             <CalcButton onClick={this.resetState}>AC</CalcButton>
             <CalcButton onClick={()=>this.toggleSign()}>+/-</CalcButton>
             <CalcButton onClick={()=>this.inputPercent()}>%</CalcButton>
-            <CalcButton className="calc-operator">÷</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("/")} className="calc-operator">÷</CalcButton>
           </div>
           <div className="calc-row">
-            <CalcButton onClick={()=>this.addToInput(7)} className="calc-number">7</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(8)} className="calc-number">8</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(9)} className="calc-number">9</CalcButton>
-            <CalcButton className="calc-operator">x</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(7)} children = "7" className="calc-number">7</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(8)} children = "8" className="calc-number">8</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(9)} children = "9" className="calc-number">9</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("*")} className="calc-operator">x</CalcButton>
           </div>
           <div className="calc-row">
-            <CalcButton onClick={()=>this.addToInput(4)} className="calc-number">4</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(5)} className="calc-number">5</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(6)} className="calc-number">6</CalcButton>
-            <CalcButton className="calc-operator">-</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(4)} children = "4" className="calc-number">4</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(5)} children = "5" className="calc-number">5</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(6)} children = "6" className="calc-number">6</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("-")} className="calc-operator">-</CalcButton>
           </div>
           <div className="calc-row">
-            <CalcButton onClick={()=>this.addToInput(1)} className="calc-number">1</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(2)} className="calc-number">2</CalcButton>
-            <CalcButton onClick={()=>this.addToInput(3)} className="calc-number">3</CalcButton>
-            <CalcButton className="calc-operator">+</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(1)} children = "1" className="calc-number">1</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(2)} children = "2" className="calc-number">2</CalcButton>
+            <CalcButton onClick={()=>this.addToInput(3)} children = "3" className="calc-number">3</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("+")} className="calc-operator">+</CalcButton>
           </div>
           <div className="calc-row">
             <CalcButton onClick={()=>this.addToInput(0)} className="calc-number">0</CalcButton>
             <CalcButton  className="calc-number"></CalcButton>
             <CalcButton onClick={()=>this.inputDot()} className="calc-number">.</CalcButton>
-            <CalcButton className="calc-operator">=</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("+")} className="calc-operator">=</CalcButton>
           </div>
         </div>
       </div>
