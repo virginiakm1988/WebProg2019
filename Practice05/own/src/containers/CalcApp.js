@@ -185,8 +185,7 @@ class CalcApp extends React.Component {
             <CalcButton onClick={()=>this.inputOperators("+")} className="calc-operator">+</CalcButton>
           </div>
           <div className="calc-row">
-            <CalcButton onClick={()=>this.addToInput(0)} className="calc-number">0</CalcButton>
-            <CalcButton  className="calc-number"></CalcButton>
+            <CalcButton onClick={()=>this.addToInput(0)} className="bigger-btn">0</CalcButton>
             <CalcButton onClick={()=>this.inputDot()} className="calc-number">.</CalcButton>
             <CalcButton onClick={()=>this.inputOperators("=")} className="calc-operator">=</CalcButton>
           </div>
