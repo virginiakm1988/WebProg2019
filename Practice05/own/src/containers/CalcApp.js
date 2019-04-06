@@ -93,6 +93,7 @@ class CalcApp extends React.Component {
         var oper = this.state.operators.pop();
         console.log("calculate numbers",num1,num2,oper)
 
+       
         if(oper === "/")
         {
           tempNumber.push(Math.floor(num2/num1));
@@ -127,6 +128,8 @@ class CalcApp extends React.Component {
         numbers: tempNumber,
         finished : true,
         operators: tempOper,
+        lastOper:oper,
+        lastNum:num1
       })
 
 
@@ -140,6 +143,34 @@ class CalcApp extends React.Component {
       this.setState({
         operators:tempOper
       })
+    }
+    else{
+      console.log(this.state.lastOper,this.state.lastNum)
+      let num1 = Number(this.state.input);
+      let num2 = Number(this.state.lastNum);
+      let oper = this.state.lastOper;
+      let tempNumber = [];
+      if(oper === "/"){
+          tempNumber.push(Math.floor(num1/num2));
+      }
+      else if( oper === "*"){
+          tempNumber.push(num1*num2)
+      }
+      else if (oper === "+"){
+        tempNumber.push(num1+num2)
+      }
+      else if (oper === '-'){
+          tempNumber.push(num1-num2)
+      }
+
+      this.setState({
+        input:tempNumber[0],
+        numbers:tempNumber,
+        finished:true,
+        
+
+      })
+
     }
 
     
