@@ -12,15 +12,16 @@ class CalcApp extends React.Component {
       input:"",
       operators:[],
       numbers:[],
-      finished: false
+      finished: false,
+      lastOper:"",
+      lastNum:0
     };
   }
 
   resetState=() => {
     // TODO
     this.setState({
-      // TODO
-      input:0,
+      input:"",
       operators:[],
       numbers:[],
       finished: false
@@ -78,27 +79,19 @@ class CalcApp extends React.Component {
   }
 
   inputOperators = (val) =>{
-
-    
-
-
-    if(this.state.finished === false)
+    if(this.state.finished === false)//if numbers before operators
     {
+      console.log("numbers before operators", this.state.numbers, this.state.operators)
       var tempNumber = this.state.numbers;
       tempNumber.push(this.state.input);
-
+ 
       var tempOper = this.state.operators;
       if(this.state.operators.length > 0)//operators inside, calculate it
       {
-        console.log(tempNumber)
-      // var tempNumber = this.state.numbers;
         var num1 = Number(tempNumber.pop());
         var num2 = Number(tempNumber.pop());
         var oper = this.state.operators.pop();
         console.log("calculate numbers",num1,num2,oper)
-
-        if(oper ==="=")
-        {}
 
         if(oper === "/")
         {
@@ -116,34 +109,40 @@ class CalcApp extends React.Component {
         }
         
       }
+      
+      
+      if(val === "="){
+        tempOper = []
+      }
       else{
-        
         tempOper.push(val)
       }
 
-      var num = tempNumber[tempNumber.length-1]
-
+      console.log(tempNumber)
       
 
+      var num = tempNumber[tempNumber.length-1]
       this.setState({
         input: num,
         numbers: tempNumber,
         finished : true,
-        operators: tempOper
+        operators: tempOper,
       })
 
+
+      
     }
-    else{
+    else if (!( val === "=")){
       var tempOper = this.state.operators;
+      console.log("in else",tempOper)
       tempOper.pop();
       tempOper.push(val)
       this.setState({
         operators:tempOper
       })
     }
+
     
-    
-    console.log(this.state.numbers,this.state.finished, this.state.operators)
   }
 
   showNotImplemented() {
@@ -189,7 +188,7 @@ class CalcApp extends React.Component {
             <CalcButton onClick={()=>this.addToInput(0)} className="calc-number">0</CalcButton>
             <CalcButton  className="calc-number"></CalcButton>
             <CalcButton onClick={()=>this.inputDot()} className="calc-number">.</CalcButton>
-            <CalcButton onClick={()=>this.inputOperators("+")} className="calc-operator">=</CalcButton>
+            <CalcButton onClick={()=>this.inputOperators("=")} className="calc-operator">=</CalcButton>
           </div>
         </div>
       </div>
