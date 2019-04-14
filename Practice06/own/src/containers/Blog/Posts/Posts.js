@@ -4,7 +4,7 @@ import '../../../style/assets/css/main.css';
 
 export default class Posts extends Component {
     render() {
-        const postIDs = ["1", "3", "5", "7", "9"];
+        const postIDs = ["1","2", "3","4", "5"];
         const lists = postIDs.map((i, index) => (
             <li key={index}>
                 <NavLink to={"/posts/" + i}>Posts #{i}</NavLink>

@@ -4,7 +4,7 @@ import Post from "../../../components/Post/Post";
 
 export default class PostRender extends Component {
     render() {
-        const postIDs = ["1", "3", "5", "7", "9"];
+        const postIDs = ["1", "2", "3", "4", "5"];
         const { id } = this.props.match.params;
         return id && postIDs.includes(id) ? (
             <Post id={id} />
