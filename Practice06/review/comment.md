@@ -11,9 +11,9 @@
 #### 可以把各頁面再做得更完整~~
 各頁面還沒完全做完
 #### `Aplication` 應該是 `Application` ? 如果是故意這麼命名的話我很抱歉XD
-![](https://i.imgur.com/DATbOyk.jpg)
-![](https://i.imgur.com/dPPJlN5.jpg)
 可是如果是拼錯的話還是建議改一下比較好啦XD不然如果是跟別人合作寫網頁的話可能會融合起來什麼的有困難，因為命名的原則不同ＸＤ
+![](https://i.imgur.com/dPPJlN5.jpg)
+![](https://i.imgur.com/DATbOyk.jpg)
 #### style
 style 的部分以後可以直接寫一個 style.css 檔，這樣不僅僅是container，就連component以後如果多寫了很多東西的話，就可以用到一樣的style檔了，不用重複打會比較方便，也不會一直打在 js 檔裡面。
 ## 其他心得
