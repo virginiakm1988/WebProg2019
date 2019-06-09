@@ -49,10 +49,7 @@ class User extends Component{
       {({ loading, error, data, subscribeToMore }) => {
         if (loading) return <p>Loading...</p>
         if (error) return <p>error</p>
-       //console.log(data.posts[1].author._id)
-       data.posts.map(post=>(console.log(post.author._id)))
-        const filtered_post = data.posts.filter(post=>(post.author._id===this.state.id))
-        console.log(filtered_post)
+       const filtered_post = data.posts.filter(post=>(post.author._id===this.state.id))
         const posts = filtered_post.map((post, _id) => (
             <Card>
               <CardBody>
