@@ -8,6 +8,7 @@ export const POSTS_QUERY = gql`
       body
       author {
         name
+        _id
       }
       published
     }
@@ -18,7 +19,7 @@ export const POSTS_QUERY = gql`
 export const USERS_QUERY = gql` 
 query {
   users {
-    id
+    _id
     name
     age
     email

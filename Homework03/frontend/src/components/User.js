@@ -14,9 +14,10 @@ class User extends Component{
   constructor(props){
     super(props);
     this.onClick = this.onClick.bind(this);
+    console.log("this props",this.props)
     this.state = {
       
-      id : this.props.data.id,
+      id : this.props.data._id,
       name : this.props.data.name,
       age : this.props.data.age,
       email : this.props.data.email,
@@ -47,10 +48,12 @@ class User extends Component{
       <Query query={POSTS_QUERY}>
       {({ loading, error, data, subscribeToMore }) => {
         if (loading) return <p>Loading...</p>
-        if (error) return <p>Error :(((</p>
-        
-        const filtered_post = data.posts.filter(post=>(post.author.name===this.state.name))
-        const posts = filtered_post.map((post, id) => (
+        if (error) return <p>error</p>
+       //console.log(data.posts[1].author._id)
+       data.posts.map(post=>(console.log(post.author._id)))
+        const filtered_post = data.posts.filter(post=>(post.author._id===this.state.id))
+        console.log(filtered_post)
+        const posts = filtered_post.map((post, _id) => (
             <Card>
               <CardBody>
               <div>

@@ -8,7 +8,7 @@ export const CREATE_POST_MUTATION = gql`
     $authorId: ID!
   ) {
     createPost(
-      data: {
+      post: {
         title: $title
         body: $body
         published: $published
@@ -24,3 +24,4 @@ export const CREATE_POST_MUTATION = gql`
     }
   }
 `
+
