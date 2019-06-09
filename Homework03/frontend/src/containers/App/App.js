@@ -66,6 +66,8 @@ class App extends Component {
       }
     })
 
+    console.log("change",this.state,this.state.formTitle,this.state.authorId)
+
     this.setState({
       formTitle: '',
       formBody: '',
@@ -101,7 +103,7 @@ class App extends Component {
                         const users = data.users.map((user, id) => (
                           <DropdownItem >
                                <div
-                                onClick={(e) => this.changeValue(user.id, e)}
+                                onClick={(e) => this.changeValue(user._id, e)}
                                >{user.name}</div>
                           </DropdownItem>
                           ))
