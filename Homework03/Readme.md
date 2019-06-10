@@ -1,4 +1,4 @@
-#1. 連接到 MongoDB
+# 1. 連接到 MongoDB
 ```
 //in backend/src/index.js
 mongoose
@@ -12,7 +12,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 ```
-#2. start the backend and frontend
+# 2. start the backend and frontend
 
 ```
 git cd backend
@@ -21,7 +21,7 @@ npm start
 git cd frontend
 npm start`
 ```
-#3.  create your user
+# 3.  create your user
 在前端create user 的功能尚未製作完成，所以要在後端的playground `localhost:4000` 新增 user。
 ####example:
 ```
@@ -39,7 +39,7 @@ mutation {
 }
 ```
 
-#4.  Post something new!
+# 4.  Post something new!
 You can now post at the frontend.
 
 
