@@ -22,8 +22,10 @@ class User extends Component{
       age : this.props.data.age,
       email : this.props.data.email,
       onClick: false,
-      like:0
+      like:0,
+      post_length: this.props.data.posts.length
     }
+    console.log("length",this.state.post_length)
   };
 
   onClick(){
@@ -40,7 +42,7 @@ class User extends Component{
       <CardHeader>
         {this.state.name}
         <div style = {{float:"right"}}> 
-        
+            {this.state.post_length}
         </div>
       </CardHeader>
       
@@ -104,7 +106,7 @@ class User extends Component{
     <CardHeader>
       {this.state.name}
       <div style = {{float:"right"}}> 
-      
+      {this.state.post_length}
       </div>
     </CardHeader>
     </Card>
